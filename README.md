@@ -65,11 +65,11 @@ defined as follows:
 
 A **regular expression** is a short-hand description for a regular language. For
 example, `ab*` is a regular expression that describes the infinitely large set
-of strings `{ab}*`. The regular expression `12` describes the language `{12}`,
-which contains a single string. The regular expression `1 | 2` describes the
-language `{1, 2}`, which contains two strings. 
+of strings `{ab}*`. The regular expression `42` describes the language `{42}`,
+which contains a single string. The regular expression `4 | 2` describes the
+language `{4, 2}`, which contains two strings. 
 
-Given a regular expression and a candidate string there are many ways to
+Given a regular expression and a candidate string, there are many ways to
 determine whether the string **matches** the expression, i.e., whether the
 string is in the set described by the expression. In this assignment, you don't
 have to worry about implementing a matching algorithm—it's been provided for
@@ -112,11 +112,11 @@ To do so, you'll need to:
    regular expressions
    + implement literal extension, so that Scala characters can be treated as
    regular expressions
-   + implement the operator `|`, which corresponds to the union operation
-   + implement the operator '~', which corresponds to the concatenation
+   + implement the binary operator `|`, which corresponds to the union operation
+   + implement the binary operator `~`, which corresponds to the concatenation
    operation
-   + implement the operator `*`, which corresponds to the Kleene star operation
-   + implement the operator `+`, which means "one or more repetitions of the
+   + implement the postfix operator `*`, which corresponds to the Kleene star operation
+   + implement the postfix operator `+`, which means "one or more repetitions of the
    preceding pattern"
    + implement the repetition operator `{n}` which means "`n` repetitions of the
    preceding pattern"
