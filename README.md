@@ -55,7 +55,7 @@ defined as follows:
    + If c is a character, then the language {c} that contains one string is
    regular.
    + If L1 and L2 are regular languages (i.e., they're each sets of strings),
-   then the language L1 ∪ L2 is regular.
+   then the language L1 ∪ L2 (i.e., the union of the two languages) is regular.
    + If L1 and L2 are regular, then the language L1 ⋅ L2  = {s1 ⋅ s2 | s1 ∈ L1 ∧
    s2 ∈ L2} is regular. Here, the symbol ⋅ means "concatenation". So s1 ⋅ s2 is
    all the characters in s1, followed by all the characters in s2.
@@ -76,6 +76,51 @@ have to worry about implementing a matching algorithm—it's been provided for
 you. Your job is to implement the _syntax_ of regular expressions: an easy way
 for users to describe them.
 
+## Implementing a DSL for regular expressions
+
+**Note:** Be sure to read the entire assignment before you start implementing!
+
+This repository contains some starter code. The pieces are:
+
+**`RegularExpression.scala`** This file defines data structures that correspond
+to the different kinds of regular languages described above. TODO: API.
+
+**`RegexMatcher.scala`** This file defines an algorithm for matching a string
+against a regular expression. You won't need to modify this file.
+
+TODO: tests
+
+TODO: program
+
+You'll modify `RegularExpression.scala` to implement the syntax for your DSL. 
+
+### The syntax for your DSL
+
+The user of your DSL should be able to write the following pattern:
+
+```
+"42" | ( ('a'*) ~ ('b'+) ~ ('c'{3}))
+```
+
+which matches either:
+   + the literal string `"42"`   _or_
+   + any string that has zero or more 'a's, followed by one or more 'b's,
+   followed by exactly three 'c's
+
+To do so, you'll need to:
+   + implement literal extension, so that Scala strings can be treated as
+   regular expressions
+   + implement literal extension, so that Scala characters can be treated as
+   regular expressions
+   + implement the operator `|`, which corresponds to the union operation
+   + implement the operator '~', which corresponds to the concatenation
+   operation
+   + implement the operator `*`, which corresponds to the Kleene star operation
+   + implement the operator `+`, which means "one or more repetitions of the
+   preceding pattern"
+   + implement the repetition operator `{n}` which means "`n` repetitions of the
+   preceding pattern"
+
 ## Checklist
 
 
@@ -84,59 +129,6 @@ for users to describe them.
 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis eos aliquid sint
 quasi aut iste. Numquam, dignissimos provident. Ea qui perferendis delectus et,
 dolor voluptates quam cumque iure possimus quas.
-
-
-## Advice
-
-### Implementation techniques
-
-As a brief summary, here are some things about Scala that may be useful to know.
-This information was compiled from Chapter 11 of _Scala for the Impatient_;
-check there for much more detailed information
-
-#### Identifiers
-A valid _identifier_ (i.e., name) can include the following characters:
-   + any ASCII character _except_ `(`, `)`, `[`, `]`, `{`, `}`, `.`, `,`, `;`,
-     `'` or `"`.
-   + Unicode characters from the 
-    [Sm](http://www.fileformat.info/info/unicode/category/Sm/list.htm) and 
-    [So](http://www.fileformat.info/info/unicode/category/So/list.htm) categories.
-
-
-#### Precedence and Associativity
-
-_Precedence_ determines how to decide which of two _different_ operations to
-perform first.
-
-_Associativity_ determines how to decide which of two applications of the _same_
-operation to perform first.
-
-In Scala, the _first_ character of an operator's name determines its precedence, 
-in increasing order as follows:
-
-```
-(all letters)
-|
-^
-&
-< >
-= !
-:
-+ -
-* / %
-(all other special characters)
-````
-
-So, `*` has higher precedence than `+`, etc. Unsurprisingly, there are a few
-caveats:
-   1. Assignment has lower precedence than any other operations
-   1. Postfix operators have lower precedence than infix operators
-
-In Scala, the _last_ character of an operator's name determines its
-associativity, according to these rules:
-   1. Operators that end with a colon `:` are right-associative
-   1. Assignment is right-associative
-   1. Every other operator is left-associative
 
 ## Peer-review another person's work
 
