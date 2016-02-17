@@ -13,7 +13,7 @@ check whether a string `s` is a letter, followed by a number.
 In your DSL, the user might write:
 
 ```
-val pattern = letter <~> number
+val pattern = letter ~ number
 pattern matches s
 ```
 
