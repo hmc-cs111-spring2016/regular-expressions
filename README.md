@@ -37,43 +37,44 @@ that's based on math. That's the definition we're most interested in because
 it's easy to translate it into code. Here we go...
 
 We start with an **alphabet**, which is a set of characters. For this
-assignment, we'll take the alphabet to be any character that can appear in a
-Scala string, i.e., [Unicode] characters.
+assignment, our alphabet will be any character that can appear in a
+Scala string, i.e., anything that the Scala compiler will let us put between two
+quotes like so: `'a'`.
 
-A **word** _w_ is a sequence of characters `c1⋅⋅⋅cn`; this word has length n.
-There is a special word called the **null** word, spelled ε; this word has
-length 0. We use the terms word and **string** interchangeably.
+A **string** _s_ is a sequence of characters `c1⋅⋅⋅cn`; this string has length
+n. There is a special string called the **null** string, spelled ε; this word
+has length 0. 
 
-A **language** _L_ is a set of words. 
+A **language** _L_ is a set of strings. 
 
 Given an alphabet, the set of **regular languages** “over that alphabet” can be 
-defined inductively as follows:
+defined as follows:
 
-   + The empty language ∅ is regular. This language contains 0 words.
-   + The language {ε} that contains the one string—the null word—is regular.
+   + The empty language ∅ is regular. This language contains 0 strings.
+   + The language {ε} that contains one string—the null string—is regular.
    + If c is a character, then the language {c} that contains one string is
    regular.
-   + If L1 and L2 are regular languages (i.e., they're each sets of words), then
-   the language L1 ∪ L2 is regular.
-   + If L1 and L2 are regular, then the language L1 ⋅ L2  = {w1 ⋅ w2 | w1 ∈ L1 ∧
-   w2 ∈ L2} is regular. Here, the symbol ⋅ means "concatenation". So w1 ⋅ w2 is
-   all the characters in w1, followed by all the characters in w2.
+   + If L1 and L2 are regular languages (i.e., they're each sets of strings),
+   then the language L1 ∪ L2 is regular.
+   + If L1 and L2 are regular, then the language L1 ⋅ L2  = {s1 ⋅ s2 | s1 ∈ L1 ∧
+   s2 ∈ L2} is regular. Here, the symbol ⋅ means "concatenation". So s1 ⋅ s2 is
+   all the characters in s1, followed by all the characters in s2.
    + If L is regular, then L* is regular. Here, the symbol * means "0 or more
-   repetitions of any word in L". So, if L is the language that contains the
+   repetitions of any string in L". So, if L is the language that contains the
    single string `ab`, then L* is {ε, ab, abab, ababa, …}.
 
 A **regular expression** is a short-hand description for a regular language. For
 example, `ab*` is a regular expression that describes the infinitely large set
-of words defined by the language `{ab}*`. The regular expression `12`
-describes the language `{12}`, which contains a single word. The regular
-expression `1 | 2` describes the language `{1, 2}`. 
+of strings `{ab}*`. The regular expression `12` describes the language `{12}`,
+which contains a single string. The regular expression `1 | 2` describes the
+language `{1, 2}`, which contains two strings. 
 
-Given a regular expression and a candidate word there are many ways to determine
-whether the word **matches** the expression, i.e., whether the word is in the
-set of words described by the expression. In this assignment, you don't have to
-worry about implementing a matching algorithm—it's been provided for you. Your
-job is to implement the _syntax_ of regular expressions: an easy way for users
-to describe regular expressions.
+Given a regular expression and a candidate string there are many ways to
+determine whether the string **matches** the expression, i.e., whether the
+string is in the set described by the expression. In this assignment, you don't
+have to worry about implementing a matching algorithm—it's been provided for
+you. Your job is to implement the _syntax_ of regular expressions: an easy way
+for users to describe them.
 
 ## Checklist
 
