@@ -66,7 +66,7 @@ defined as follows:
 A **regular expression** is a short-hand description for a regular language. For
 example, `ab*` is a regular expression that describes the infinitely large set
 of strings `{ab}*`. The regular expression `42` describes the language `{42}`,
-which contains a single string. The regular expression `4 | 2` describes the
+which contains a single string. The regular expression `4 || 2` describes the
 language `{4, 2}`, which contains two strings. 
 
 Given a regular expression and a candidate string, there are many ways to
@@ -99,7 +99,7 @@ You'll modify `RegularExpression.scala` to implement the syntax for your DSL.
 The user of your DSL should be able to write the following pattern:
 
 ```
-"42" | ( ('a'*) ~ ('b'+) ~ ('c'{3}))
+"42" || ( ('a'*) ~ ('b'+) ~ ('c'{3}))
 ```
 
 which matches either:
@@ -112,7 +112,7 @@ To do so, you'll need to:
    regular expressions
    + implement literal extension, so that Scala characters can be treated as
    regular expressions
-   + implement the binary operator `|`, which corresponds to the union operation
+   + implement the binary operator `||`, which corresponds to the union operation
    + implement the binary operator `~`, which corresponds to the concatenation
    operation
    + implement the postfix operator `*`, which corresponds to the Kleene star operation

@@ -1,7 +1,5 @@
 package dsls.regex
 
-import scala.language.postfixOps
-
 object Program extends App {
   
   /****************************************************************************
@@ -47,8 +45,7 @@ object Program extends App {
    * TODO: Add the union operator for regular expressions
    * 
    * Make it possible to replace the definition of digit with:
-   *   val digit = '0' <|> '1' <|> '2' <|> '3' <|> '4' <|> 
-   *               '5' <|> '6' <|> '7' <|> '8' <|> '9' 
+   *   val digit = '0' || '1' || '2' || '3' || '4' || '5' || '6' || '7' || '8' || '9' 
    ***************************************************************************/
   val digit = Union(zero, Union(one, Union(two, Union(three, Union(four, 
               Union(five, Union(six, Union(seven, Union(eight, nine)))))))))
@@ -65,10 +62,20 @@ object Program extends App {
   require(digit matches "9")      
 
   /****************************************************************************
+   * TODO: Add the concatenation operator for regular expressions
+   * 
+   * Make it possible to replace the definition of digit with:
+   *   val pi = '3' ~ '1' ~ '4'
+   ***************************************************************************/
+  val pi = Concat(Literal('3'), Concat(Literal('1'), Literal('4')))
+
+  require(pi matches "314")
+  
+  /****************************************************************************
    * TODO: Add the star operator for regular expressions
    * 
    * Make it possible to replace the definition of zeroOrMoreDigits with:
-   *   val zeroOrMoreDigits = digit *
+   *   val zeroOrMoreDigits = digit <*>
    ***************************************************************************/
   val zeroOrMoreDigits = Star(digit)
   
@@ -79,10 +86,10 @@ object Program extends App {
   require(zeroOrMoreDigits matches "987651234")
   
   /****************************************************************************
-   * TODO: Add the concatenation operator for regular expressions
+   * TODO: Add the plus operator for regular expressions
    * 
    * Make it possible to replace the definition of number with:
-   *   val number = digit + 
+   *   val number = digit <+> 
    ***************************************************************************/
   val number = Concat(digit, zeroOrMoreDigits)
   
@@ -92,15 +99,22 @@ object Program extends App {
   require(number matches "09")
   require(number matches "987651234")
 
-   /****************************************************************************
+  /****************************************************************************
    * TODO: Add the repetition operator for regular expressions
    * 
-   * Make it possible to replace the following several definitions with:
-   *   val pattern = "42" | ( ('a'*) ~ ('b'+) ~ ('c'{3}))
+   * Make it possible to replace the definition of cThree with:
+   *    val cThree = 'c'{3}
+   ***************************************************************************/
+  val cThree = Concat(Literal('c'), Concat(Literal('c'), Literal('c')))
+  
+  /****************************************************************************
+   * Additional pattern
+   * Once you've added all the operators, it should be possible to replace 
+   * the following several definitions with:
+   *   val pattern = "42" | ( ('a' <*>) ~ ('b' <+>) ~ ('c'{3}))
    ***************************************************************************/
   val aStar = Star(Literal('a'))
   val bPlus = Concat(Literal('b'), Star(Literal('b')))
-  val cThree = Concat(Literal('c'), Concat(Literal('c'), Literal('c')))
   val pattern = Union(answer, Concat(aStar, Concat(bPlus, cThree)))
   
   require(pattern matches "42")
@@ -115,7 +129,7 @@ object Program extends App {
    * 
    * Once you've added all the operators, it should be possible to replace 
    * the following several definitions with:
-   *   val helloworld = ("hello" *) ~ "world"
+   *   val helloworld = ("hello" <*>) ~ "world"
    ***************************************************************************/
   val hello = Concat(Literal('h'), Concat(Literal('e'), Concat(Literal('l'), 
               Concat(Literal('l'), Literal('o'))))) 
