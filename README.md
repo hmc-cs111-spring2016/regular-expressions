@@ -47,7 +47,7 @@ has length 0.
 
 A **language** _L_ is a set of strings. 
 
-Given an alphabet, the set of **regular languages** “over that alphabet” can be 
+Given an alphabet, the **regular languages** “over that alphabet” can be 
 defined as follows:
 
    + The empty language ∅ is regular. This language contains 0 strings.
@@ -61,7 +61,7 @@ defined as follows:
    all the characters in s1, followed by all the characters in s2.
    + If L is regular, then L* is regular. Here, the symbol * means "0 or more
    repetitions of any string in L". So, if L is the language that contains the
-   single string `ab`, then L* is {ε, ab, abab, ababa, …}.
+   single string `ab`, then L* is {ε, ab, abab, ababab, …}.
 
 A **regular expression** is a short-hand description for a regular language. For
 example, `ab*` is a regular expression that describes the infinitely large set
