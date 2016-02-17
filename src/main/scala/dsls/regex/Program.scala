@@ -107,11 +107,13 @@ object Program extends App {
    ***************************************************************************/
   val cThree = Concat(Literal('c'), Concat(Literal('c'), Literal('c')))
   
+  require(cThree matches "ccc")
+  
   /****************************************************************************
    * Additional pattern
    * Once you've added all the operators, it should be possible to replace 
    * the following several definitions with:
-   *   val pattern = "42" | ( ('a' <*>) ~ ('b' <+>) ~ ('c'{3}))
+   *   val pattern = "42" || ( ('a' <*>) ~ ('b' <+>) ~ ('c'{3}))
    ***************************************************************************/
   val aStar = Star(Literal('a'))
   val bPlus = Concat(Literal('b'), Star(Literal('b')))
