@@ -121,9 +121,6 @@ To do so, you'll need to:
    + implement the repetition operator `{n}` which means "`n` repetitions of the
    preceding pattern"
 
-## Checklist
-
-
 ## A running diary 
 
 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis eos aliquid sint
@@ -131,4 +128,6 @@ quasi aut iste. Numquam, dignissimos provident. Ea qui perferendis delectus et,
 dolor voluptates quam cumque iure possimus quas.
 
 ## Peer-review another person's work
+
+## Checklist
 
