@@ -9,8 +9,8 @@
 In this assignment, you'll use the techniques we've learned in class to
 implement an internal DSL. This internal DSL allows users to easily check
 whether a given string matches a pattern. For example, imagine a user wants to
-check whether a string `s` is a letter, followed by a number. 
-In your DSL, the user might write:
+check whether a string `s` takes the form of a letter, followed by a number
+(e.g., `c3`). In your DSL, the user might write:
 
 ```
 val pattern = letter ~ number
@@ -64,7 +64,7 @@ defined as follows:
    single string `ab`, then L* is {ε, ab, abab, ababab, …}.
 
 A **regular expression** is a short-hand description for a regular language. For
-example, `ab*` is a regular expression that describes the infinitely large set
+example, `(ab)*` is a regular expression that describes the infinitely large set
 of strings `{ab}*`. The regular expression `42` describes the language `{42}`,
 which contains a single string. The regular expression `4 || 2` describes the
 language `{4, 2}`, which contains two strings. 
@@ -96,7 +96,7 @@ You'll modify `RegularExpression.scala` to implement the syntax for your DSL.
 
 ### The syntax for your DSL
 
-The user of your DSL should be able to write the following pattern:
+The user of your DSL eventually should be able to write the following pattern:
 
 ```
 "42" || ( ('a'*) ~ ('b'+) ~ ('c'{3}))
