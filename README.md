@@ -1,6 +1,8 @@
 [EmailRegex]: http://emailregex.com/
 [Unicode]: https://en.wikipedia.org/wiki/Plane_(Unicode)#Basic_Multilingual_Plane
 [Kleene]: https://en.wikipedia.org/wiki/Kleene_star
+[Teams]: https://github.com/hmc-cs111-spring2016/regular-expressions/wiki/Peer-review
+
 
 # Implementing an internal DSL: regular expressions
 
@@ -157,18 +159,16 @@ Great responses (i.e., responses that receive a 4) will additionally:
 # Critiques
 
 After the submission deadline, read over and comment on your 
-[critique partners'][Teams] work. Be sure to comment on each of their ideas.
+[critique partners'][Teams] work. Be sure to comment on their code _and_ on
+their reflection.
 
 Here are some suggestions for critiques:
 
-   + What do you like about their idea(s)?
-   + Was there a need that was similar to one you thought of? If so, how are
-   your thoughts about the problems similar to and different from your partners?   
-   + Do you know anything about this domain? Do you know of existing DSLs that
-   they didn't mention or do you have some expertise thinking about or writing
-   programs for this domain? How might your experience augment your partner's
-   thoughts on the domain?
-   + Answer the questions about suitability, scope, etc. of the project.
+   + What do you like about their implementation?
+   + Is there anything that could be done to improve their implementation?
+   + Did they implement things in the same or in different ways as you?
+   + With which aspects of their reflection do you agree? With which aspects do
+   you disagree?
 
 ## Tasks
 - [ ] Read the assignment.
