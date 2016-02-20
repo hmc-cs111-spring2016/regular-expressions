@@ -80,19 +80,26 @@ for users to describe them.
 
 **Note:** Be sure to read the entire assignment before you start implementing!
 
-This repository contains some starter code. The pieces are:
+This repository contains some starter code. The most important pieces are:
 
 **`RegularExpression.scala`** This file defines data structures that correspond
-to the different kinds of regular languages described above. TODO: API.
+to the different kinds of regular languages described above. You'll modify this
+file to write your DSL.
+
+**`Program.scala`** A program that uses the data structures in
+`RegularExpresion.scala` to build descriptions of regular expressions, then
+match strings against those expressions. This program compiles and runs
+correctly as-is, but it's clunky: it uses the data structures from the
+regular expression library but it's not very DSL-y. Your job is to modify this
+file to use your DSL instead.
+
+There are a couple of other pieces of code provided:
 
 **`RegexMatcher.scala`** This file defines an algorithm for matching a string
 against a regular expression. You won't need to modify this file.
 
-TODO: tests
-
-TODO: program
-
-You'll modify `RegularExpression.scala` to implement the syntax for your DSL. 
+**`src/test/scala/dsls/regex`** Some test files for the matching algorithm. You
+won't need to modify these files.
 
 ### The syntax for your DSL
 
@@ -121,13 +128,57 @@ To do so, you'll need to:
    + implement the repetition operator `{n}` which means "`n` repetitions of the
    preceding pattern"
 
-## A running diary 
+## Reflecting on design / implementation
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis eos aliquid sint
-quasi aut iste. Numquam, dignissimos provident. Ea qui perferendis delectus et,
-dolor voluptates quam cumque iure possimus quas.
+In the file `reflection.md`, you'll write about:
+   + Your process of implementing the DSL
+   + Your thoughts about the design of this DSL
 
-## Peer-review another person's work
+I highly recommend that you **work on this part as you go.** In other words,
+treat it as a running diary. Take a moment now to look at the questions in that
+file, then update the file as you work on the assignment. Although you might
+treat the file as a running diary, the version you submit should _not_ be a
+stream of consciousness. Make your final submission clear and concise.
 
-## Checklist
+## Grading
+Good responses (i.e., responses that receive a 3) will:
 
+   + modify `RegularExpression.scala` to implement the internal DSL
+   + transform `Program.scala` to work with the DSL
+   + respond to the questions in `reflection.md`
+
+Great responses (i.e., responses that receive a 4) will additionally:
+
+   + provide very well-documented code in `RegularExpression.scala`.
+   + deeply engage in the reflection process, e.g., by discussing the benefits
+   and drawbacks of every operation in the language, from both the implementer's
+   and user's perspective
+
+# Critiques
+
+After the submission deadline, read over and comment on your 
+[critique partners'][Teams] work. Be sure to comment on each of their ideas.
+
+Here are some suggestions for critiques:
+
+   + What do you like about their idea(s)?
+   + Was there a need that was similar to one you thought of? If so, how are
+   your thoughts about the problems similar to and different from your partners?   
+   + Do you know anything about this domain? Do you know of existing DSLs that
+   they didn't mention or do you have some expertise thinking about or writing
+   programs for this domain? How might your experience augment your partner's
+   thoughts on the domain?
+   + Answer the questions about suitability, scope, etc. of the project.
+
+## Tasks
+- [ ] Read the assignment.
+- [ ] Implement literal extension for characters.
+- [ ] Implement literal extension for strings.
+- [ ] Implement the binary operator `||`.
+- [ ] Implement the binary operator `~`.
+- [ ] Implement the postfix operator `*`.
+- [ ] Implement the postfix operator `+`.
+- [ ] Implement the repetition operator `{n}`.
+- [ ] Write responses in `reflection.md`.
+- [ ] Submit your work.
+- [ ] Comment on your [critique partners'][Teams] work.
