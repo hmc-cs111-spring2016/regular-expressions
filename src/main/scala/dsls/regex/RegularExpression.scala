@@ -1,5 +1,8 @@
 package dsls.regex
 
+import scala.language.implicitConversions
+import scala.language.postfixOps
+
 /**
  * Modify this file to implement an internal DSL for regular expressions. 
  * 
@@ -11,6 +14,21 @@ package dsls.regex
 abstract class RegularExpression {
   /** returns true if the given string matches this regular expression */
   def matches(string: String) = RegexMatcher.matches(string, this)
+  def matches(char: Char) = RegexMatcher.matches(char.toString, this)
+
+  def ||(other:RegularExpression):RegularExpression = Union(this, other)
+  def ~(other:RegularExpression):RegularExpression = Concat(this, other)
+  //Specifying the return type of the above functions means we don't need extractors.
+  
+  def <*> = Star(this)
+  def * = this<*>
+  def <+> = this ~ (this <*>)
+  def + = this<+>
+
+  def apply(n:Int):RegularExpression = {
+    if(n==0) EPSILON
+    else this~this{n-1}
+  }
 }
 
 /** a regular expression that matches nothing */
@@ -34,3 +52,12 @@ case class Concat(val left: RegularExpression, val right: RegularExpression)
  *  expression
  */
 case class Star(val expression: RegularExpression) extends RegularExpression
+
+object RegularExpression {
+  implicit def charToRegex(c: Char): RegularExpression = Literal(c)
+
+  implicit def strToRegex(s: String): RegularExpression = {
+    ((EPSILON:RegularExpression) /: s)((x,y)=>Concat(x,y))
+  }
+}
+
