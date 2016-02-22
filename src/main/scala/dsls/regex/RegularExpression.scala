@@ -18,6 +18,25 @@ abstract class RegularExpression {
   
   /** allows users to use ~ as concatenation operator */
   def ~(rest: RegularExpression) = Concat(this, rest)
+  
+  /** allows users to use * or <*> for 0 or more repetitions */
+  def <*> = Star(this)
+  /** leverage implemented <*> to allow for flexibility in syntax */
+  def * = this <*>
+  
+  /** allows users to use + or <+> for 1 or more repetitions */
+  def <+> = this ~ this*
+  /** leverage implemented <+> to allow for flexibility in syntax */
+  def + = this <+>
+  
+  /** uses pattern matching to allow users to use {n} to represent n repetitions of this */
+  def apply(repeats: Int): RegularExpression = {
+    repeats match {
+      case 0 => EPSILON
+      // Recursive case where we concatenate 1 instance of this
+      case x => this ~ this{repeats-1}
+    }
+  }
 }
 
 /** A companion object for RegularExpression to handle implicit conversions*/
@@ -33,8 +52,8 @@ object RegularExpression {
     // Method that uses pattern matching to reconstruct the literals 
     def literalsCombine(list: List[RegularExpression]): RegularExpression = {
       list match {
+        case Nil => EPSILON
         case (x::xs) => Concat(x, literalsCombine(xs))
-        case _ => EPSILON
       }
     }
     // Call literalsCombine to concatenate literals to make a RegularExpression
