@@ -1,4 +1,5 @@
 package dsls.regex
+import RegularExpression._
 
 object Program extends App {
   
@@ -9,16 +10,27 @@ object Program extends App {
    *   val zero = '0'
    * etc.
    ***************************************************************************/
-  val zero  = Literal('0')
-  val one   = Literal('1')
-  val two   = Literal('2')
-  val three = Literal('3')
-  val four  = Literal('4')
-  val five  = Literal('5')
-  val six   = Literal('6')
-  val seven = Literal('7')
-  val eight = Literal('8')
-  val nine  = Literal('9')
+//  val zero  = Literal('0')
+//  val one   = Literal('1')
+//  val two   = Literal('2')
+//  val three = Literal('3')
+//  val four  = Literal('4')
+//  val five  = Literal('5')
+//  val six   = Literal('6')
+//  val seven = Literal('7')
+//  val eight = Literal('8')
+//  val nine  = Literal('9')
+  
+  val zero  = '0'
+  val one   = '1'
+  val two   = '2'
+  val three = '3'
+  val four  = '4'
+  val five  = '5'
+  val six   = '6'
+  val seven = '7'
+  val eight = '8'
+  val nine  = '9'
   
   require(zero matches "0")
   require(one matches "1")
@@ -37,7 +49,7 @@ object Program extends App {
    * Make it possible to replace the definition of answer with:
    *   val answer = "42"
    ***************************************************************************/
-  val answer = Concat(four, two)
+  val answer = "42"
 
   require(answer matches "42")
               
@@ -47,9 +59,9 @@ object Program extends App {
    * Make it possible to replace the definition of digit with:
    *   val digit = '0' || '1' || '2' || '3' || '4' || '5' || '6' || '7' || '8' || '9' 
    ***************************************************************************/
-  val digit = Union(zero, Union(one, Union(two, Union(three, Union(four, 
-              Union(five, Union(six, Union(seven, Union(eight, nine)))))))))
-
+//  val digit = Union(zero, Union(one, Union(two, Union(three, Union(four, 
+//              Union(five, Union(six, Union(seven, Union(eight, nine)))))))))
+  val digit = '0' || '1' || '2' || '3' || '4' || '5' || '6' || '7' || '8' || '9' 
   require(digit matches "0")
   require(digit matches "1")
   require(digit matches "2")
