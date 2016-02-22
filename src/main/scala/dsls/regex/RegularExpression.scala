@@ -24,6 +24,23 @@ abstract class RegularExpression {
     Concat(this, other)
   }
   
+  def <*> = {
+    Star(this)
+  }
+  
+  def <+> = {
+    Concat(this, this <*>)
+  }
+  
+  def apply(x:Int):RegularExpression = {
+    if (x == 0) {
+      EPSILON
+    }
+    else {
+      this ~ this{x-1}
+    }
+  }
+  
 }
 
 /** a regular expression that matches nothing */

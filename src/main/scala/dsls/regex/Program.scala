@@ -88,12 +88,12 @@ object Program extends App {
   require(pi matches "314")
   
   /****************************************************************************
-   * TODO: Add the star operator for regular expressions
+   * Add the star operator for regular expressions
    * 
    * Make it possible to replace the definition of zeroOrMoreDigits with:
    *   val zeroOrMoreDigits = digit <*>
    ***************************************************************************/
-  val zeroOrMoreDigits = Star(digit)
+  val zeroOrMoreDigits = digit <*>
   
   require(zeroOrMoreDigits matches "")
   require(zeroOrMoreDigits matches "0")
@@ -102,12 +102,12 @@ object Program extends App {
   require(zeroOrMoreDigits matches "987651234")
   
   /****************************************************************************
-   * TODO: Add the plus operator for regular expressions
+   * Add the plus operator for regular expressions
    * 
    * Make it possible to replace the definition of number with:
    *   val number = digit <+> 
    ***************************************************************************/
-  val number = Concat(digit, zeroOrMoreDigits)
+  val number = digit <+>
   
   require(!(number matches ""))
   require(number matches "0")
@@ -116,12 +116,12 @@ object Program extends App {
   require(number matches "987651234")
 
   /****************************************************************************
-   * TODO: Add the repetition operator for regular expressions
+   * Add the repetition operator for regular expressions
    * 
    * Make it possible to replace the definition of cThree with:
    *    val cThree = 'c'{3}
    ***************************************************************************/
-  val cThree = Concat(Literal('c'), Concat(Literal('c'), Literal('c')))
+  val cThree = 'c'{3}
   
   require(cThree matches "ccc")
   
@@ -131,9 +131,10 @@ object Program extends App {
    * the following several definitions with:
    *   val pattern = "42" || ( ('a' <*>) ~ ('b' <+>) ~ ('c'{3}))
    ***************************************************************************/
-  val aStar = Star(Literal('a'))
-  val bPlus = Concat(Literal('b'), Star(Literal('b')))
-  val pattern = Union(answer, Concat(aStar, Concat(bPlus, cThree)))
+//  val aStar = Star(Literal('a'))
+//  val bPlus = Concat(Literal('b'), Star(Literal('b')))
+//  val pattern = Union(answer, Concat(aStar, Concat(bPlus, cThree)))
+  val pattern = "42" || ( ('a' <*>) ~ ('b' <+>) ~ ('c'{3}))
   
   require(pattern matches "42")
   require(pattern matches "bccc")
