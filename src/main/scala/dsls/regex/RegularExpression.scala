@@ -1,5 +1,8 @@
 package dsls.regex
 
+import scala.language.implicitConversions
+import scala.language.postfixOps
+
 /**
  * Modify this file to implement an internal DSL for regular expressions. 
  * 
@@ -11,6 +14,16 @@ package dsls.regex
 abstract class RegularExpression {
   /** returns true if the given string matches this regular expression */
   def matches(string: String) = RegexMatcher.matches(string, this)
+  def matches(char: Char) = RegexMatcher.matches(char.toString, this)
+  
+  def ||(other:RegularExpression): RegularExpression = {
+    Union(this, other)
+  }
+  
+  def ~(other:RegularExpression): RegularExpression = {
+    Concat(this, other)
+  }
+  
 }
 
 /** a regular expression that matches nothing */
@@ -34,3 +47,13 @@ case class Concat(val left: RegularExpression, val right: RegularExpression)
  *  expression
  */
 case class Star(val expression: RegularExpression) extends RegularExpression
+
+object RegularExpression {
+  
+  implicit def charToRegEx(char: Char):RegularExpression = Literal(char)
+  
+  implicit def stringToRegEx(str: String):RegularExpression = {
+    val characters:List[RegularExpression] = str.toList map Literal
+    characters.reduce((r, c) => Concat(r, c))
+  }
+}
