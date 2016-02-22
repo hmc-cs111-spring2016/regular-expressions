@@ -11,6 +11,35 @@ package dsls.regex
 abstract class RegularExpression {
   /** returns true if the given string matches this regular expression */
   def matches(string: String) = RegexMatcher.matches(string, this)
+// Handles matches for a character input, not necessary if we have implicit conversion
+//  def matches(char: Char) = RegexMatcher.matches(char.toString, this)
+  /** allows users to use || as union operator */
+  def ||(rest: RegularExpression) = Union(this, rest)
+  
+  /** allows users to use ~ as concatenation operator */
+  def ~(rest: RegularExpression) = Concat(this, rest)
+}
+
+/** A companion object for RegularExpression to handle implicit conversions*/
+object RegularExpression {
+  /** implicit conversion from Char to valid RegularExpression */
+  implicit def charToRegex(char: Char): RegularExpression = Literal(char)
+  
+  /** implicit conversion from String to valid RegularExpression */
+  implicit def stringToRegex(string: String): RegularExpression = {
+    // Convert string to a list of literals such that they are valid RegularExpressions
+    val listLiterals: List[RegularExpression] = string.toList map Literal
+    
+    // Method that uses pattern matching to reconstruct the literals 
+    def literalsCombine(list: List[RegularExpression]): RegularExpression = {
+      list match {
+        case (x::xs) => Concat(x, literalsCombine(xs))
+        case _ => EPSILON
+      }
+    }
+    // Call literalsCombine to concatenate literals to make a RegularExpression
+    literalsCombine(listLiterals)
+  }
 }
 
 /** a regular expression that matches nothing */
