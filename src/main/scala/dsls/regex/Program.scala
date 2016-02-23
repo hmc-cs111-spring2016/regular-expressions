@@ -1,5 +1,7 @@
 package dsls.regex
 
+import RegularExpression._
+
 object Program extends App {
   
   /****************************************************************************

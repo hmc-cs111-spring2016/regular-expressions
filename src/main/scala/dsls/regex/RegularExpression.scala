@@ -1,5 +1,8 @@
 package dsls.regex
 
+import scala.language.implicitConversions
+
+
 /**
  * Modify this file to implement an internal DSL for regular expressions. 
  * 
@@ -10,7 +13,28 @@ package dsls.regex
 /** The top of a class hierarchy that encodes regular expressions. */
 abstract class RegularExpression {
   /** returns true if the given string matches this regular expression */
-  def matches(string: String) = RegexMatcher.matches(string, this)
+//   def matches(string: String) = RegexMatcher.matches(string, this)
+
+//   def || (val that: RegularExpression) = Union(this,that)
+
+//   def ~ (val that: RegularExpression) = Concat(this,that)
+//   def + (val that: RegularExpression) = this ~ this*
+//   def * = Star(this)
+
+//   def apply (val num: Int): RegularExpression = {
+//   	if (num > 0) {
+//   		this ~ this(n-1)
+//   	} else {
+//   		EPSILON
+//   	}
+//   }
+
+
+// }
+
+// object RegularExpression {
+//   implicit def toChar(c: Char) = Literal(c)
+//   implicit def toString(word: String) = Literal(word)
 }
 
 /** a regular expression that matches nothing */
@@ -20,7 +44,10 @@ object EMPTY extends RegularExpression
 object EPSILON extends RegularExpression
 
 /** a regular expression that matches a literal character */
-case class Literal(val literal: Char) extends RegularExpression
+//case class Literal(val literal: Char) extends RegularExpression
+
+/** a regular expression that matches a literal string */
+//case class Literal(val literal: String) extends RegularExpression
 
 /** a regular expression that matches either one expression or another */
 case class Union(val left: RegularExpression, val right: RegularExpression) 
@@ -29,8 +56,13 @@ case class Union(val left: RegularExpression, val right: RegularExpression)
 /** a regular expression that matches one expression followed by another */
 case class Concat(val left: RegularExpression, val right: RegularExpression) 
   extends RegularExpression
-  
+
 /** a regular expression that matches zero or more repetitions of another 
  *  expression
  */
 case class Star(val expression: RegularExpression) extends RegularExpression
+
+
+
+
+

@@ -1,3 +1,4 @@
+//DON'T MODIFY THIS FILE
 package dsls.regex
 
 object RegexMatcher {
