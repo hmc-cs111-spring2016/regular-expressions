@@ -72,18 +72,12 @@ object Program extends App {
   require(number matches "987651234")
 
   // Repetition operator for regular expressions.
-//  val cThree = 'c'{3}
-  
-  val cThree = Concat(Literal('c'), Concat(Literal('c'), Literal('c')))
-  
+  val cThree = 'c'{3}
+    
   require(cThree matches "ccc")
   
-//  val pattern = "42" || ( ('a' <*>) ~ ('b' <+>) ~ ('c'{3}))
+  val pattern = "42" || ( ('a' <*>) ~ ('b' <+>) ~ ('c'{3}))
 
-  val aStar = Star(Literal('a'))
-  val bPlus = Concat(Literal('b'), Star(Literal('b')))
-  val pattern = Union(answer, Concat(aStar, Concat(bPlus, cThree)))
-  
   require(pattern matches "42")
   require(pattern matches "bccc")
   require(pattern matches "abccc")
@@ -99,12 +93,7 @@ object Program extends App {
   require(helloworld matches "world")
   require(helloworld matches "hellohelloworld")
   
-//  val telNumber = '(' ~ digit{3} ~ ')' ~ digit{3} ~ '-' ~ digit{4}
-  
-  val threeDigits = Concat(digit, Concat(digit, digit))
-  val fourDigits = Concat(threeDigits, digit)
-  val areaCode = Concat(Literal('('), Concat(threeDigits, Literal(')')))
-  val telNumber = Concat(areaCode, Concat(threeDigits, Concat(Literal('-'), fourDigits)))
+  val telNumber = '(' ~ digit{3} ~ ')' ~ digit{3} ~ '-' ~ digit{4}
 
   require(telNumber matches "(202)456-1111")
 }

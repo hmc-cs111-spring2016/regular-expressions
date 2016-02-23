@@ -10,7 +10,7 @@ The most difficult part of implementing these operators was to realize where I n
 
 The repetition operator was the most difficult to implement because I forgot that arguments could be passed into methods through curly braces. Once I started looking at this operator as a `RegularExpression` that took one argument, I understood how to go about solving the problem. However, it took me a while to implement it. I wanted to modify `RegularExpression` so that it could take an optional argument, that being the number of times it should be repeated. 
 
-I first tried to create a companion object with an implicit definition that would convert a `RegularExpression` followed by an integer argument into one `RegularExpression`. However, this was not recognized as a valid command and the program gave errors about some of the operators not taking arguments. I then tried changing up the order in which I called the implicit definitions of the program.
+I first tried to create a companion object with an implicit definition that would convert a `RegularExpression` followed by an integer argument into one `RegularExpression`. However, this was not recognized as a valid command and the program gave errors about some of the operators not taking arguments. I then tried changing up the order in which I called the implicit definitions of the program. Eventually I used a call method in the `RegularExpression` class that would treat the repetition value passed after a regular expression as an argument to an instance of the class. 
 
 ## Comment on the design of this internal DSL
 

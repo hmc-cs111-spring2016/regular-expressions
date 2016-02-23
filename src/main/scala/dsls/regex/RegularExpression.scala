@@ -18,7 +18,15 @@ abstract class RegularExpression {
   def <*> = Star(this)
   
   /** Implementation of postfix operator for one or more pattern repetitions. */
-  def <+> = Concat(this, EMPTY)
+  def <+> = Concat(this, Star(this))
+  
+  /** Call method dealing with repetition operators that takes in an integer as an 
+   *  argument and repeats the given expression that many times
+   */
+  def apply (repeat: Int): RegularExpression = {
+    if (repeat == 0) EMPTY
+    else Concat(this, apply(repeat-1))
+  }
 }
 
 /** a regular expression that matches nothing */
@@ -58,14 +66,3 @@ object Concat {
  *  expression
  */
 case class Star(val expression: RegularExpression) extends RegularExpression
-
-/** RegularExpression companion object dealing with repetition operators that takes 
- *  in an integer as an argument and repeats the given expression that many times
- */
-object RegularExpression {
-  implicit def regexArgs (expr: =>Union) (repeat: =>Int) = {
-    for (i <- 1 to repeat) {
-      expr
-    }
-  }
-}
