@@ -1,16 +1,20 @@
 package dsls.regex
 
-/**
- * Modify this file to implement an internal DSL for regular expressions. 
- * 
- * You're allowed to add anything you want to this file, but you're not allowed
- * to *remove* anything that currently appears in the file.
- */
+import scala.language.implicitConversions
+import scala.language.postfixOps
 
 /** The top of a class hierarchy that encodes regular expressions. */
 abstract class RegularExpression {
   /** returns true if the given string matches this regular expression */
   def matches(string: String) = RegexMatcher.matches(string, this)
+  
+  def ||(expr: RegularExpression) = Union(this, expr)
+  
+  def ~(expr: RegularExpression) = Concat(this, expr)
+  
+  def <*> = Star(this)
+  
+  def <+> = Concat(this, EMPTY)
 }
 
 /** a regular expression that matches nothing */
@@ -22,15 +26,36 @@ object EPSILON extends RegularExpression
 /** a regular expression that matches a literal character */
 case class Literal(val literal: Char) extends RegularExpression
 
+object Literal {
+  implicit def charToLiteral(c: Char) = Literal(c)
+}
+
 /** a regular expression that matches either one expression or another */
 case class Union(val left: RegularExpression, val right: RegularExpression) 
   extends RegularExpression
-
+  
 /** a regular expression that matches one expression followed by another */
 case class Concat(val left: RegularExpression, val right: RegularExpression) 
   extends RegularExpression
+  
+object Concat {
+  implicit def stringToRegex(s: String): RegularExpression = {
+    if (s == EPSILON)
+      s
+    else 
+      Concat(Literal(s.charAt(0)), stringToRegex(s.substring(1)))
+  }
+}
   
 /** a regular expression that matches zero or more repetitions of another 
  *  expression
  */
 case class Star(val expression: RegularExpression) extends RegularExpression
+
+//object RegularExpression {
+//  implicit def regexArgs (expr: =>RegularExpression) (repeat: =>Int) = {
+//    for (i <- 1 to repeat) {
+//      expr
+//    }
+//  }
+//}

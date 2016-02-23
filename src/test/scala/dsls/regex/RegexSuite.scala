@@ -11,4 +11,9 @@ class RegexSuite extends FunSuite with Matchers {
    test("epsilon*") {
      (Star(EPSILON) matches "") should be (true)
    }
+   
+   test("union") {
+     (Union(Literal('0'), EMPTY) matches "0") should be (true)
+     (Union(Literal('1'), EMPTY) matches "0") should be (false)
+   }
 }
