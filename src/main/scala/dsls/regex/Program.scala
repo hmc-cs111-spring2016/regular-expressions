@@ -79,7 +79,8 @@ object Program extends App {
    * Make it possible to replace the definition of digit with:
    *   val pi = '3' ~ '1' ~ '4'
    ***************************************************************************/
-  val pi = Concat(Literal('3'), Concat(Literal('1'), Literal('4')))
+  val pi = '3' ~ '1' ~ '4'
+  //val pi = Concat(Literal('3'), Concat(Literal('1'), Literal('4')))
 
   require(pi matches "314")
   
@@ -89,7 +90,8 @@ object Program extends App {
    * Make it possible to replace the definition of zeroOrMoreDigits with:
    *   val zeroOrMoreDigits = digit <*>
    ***************************************************************************/
-  val zeroOrMoreDigits = Star(digit)
+  val zeroOrMoreDigits = digit <*>
+  //val zeroOrMoreDigits = Star(digit)
   
   require(zeroOrMoreDigits matches "")
   require(zeroOrMoreDigits matches "0")
@@ -103,7 +105,8 @@ object Program extends App {
    * Make it possible to replace the definition of number with:
    *   val number = digit <+> 
    ***************************************************************************/
-  val number = Concat(digit, zeroOrMoreDigits)
+  val number = digit <+> 
+  //val number = Concat(digit, zeroOrMoreDigits)
   
   require(!(number matches ""))
   require(number matches "0")
@@ -117,7 +120,8 @@ object Program extends App {
    * Make it possible to replace the definition of cThree with:
    *    val cThree = 'c'{3}
    ***************************************************************************/
-  val cThree = Concat(Literal('c'), Concat(Literal('c'), Literal('c')))
+  val cThree = 'c'{3}
+  //val cThree = Concat(Literal('c'), Concat(Literal('c'), Literal('c')))
   
   require(cThree matches "ccc")
   
@@ -127,9 +131,11 @@ object Program extends App {
    * the following several definitions with:
    *   val pattern = "42" || ( ('a' <*>) ~ ('b' <+>) ~ ('c'{3}))
    ***************************************************************************/
-  val aStar = Star(Literal('a'))
-  val bPlus = Concat(Literal('b'), Star(Literal('b')))
-  val pattern = Union(answer, Concat(aStar, Concat(bPlus, cThree)))
+//  val aStar = Star(Literal('a'))
+//  val bPlus = Concat(Literal('b'), Star(Literal('b')))
+//  val pattern = Union(answer, Concat(aStar, Concat(bPlus, cThree)))
+  
+  val pattern = "42" || ( ('a' <*>) ~ ('b' <+>) ~ ('c'{3}))
   
   require(pattern matches "42")
   require(pattern matches "bccc")
@@ -145,13 +151,16 @@ object Program extends App {
    * the following several definitions with:
    *   val helloworld = ("hello" <*>) ~ "world"
    ***************************************************************************/
-  val hello = Concat(Literal('h'), Concat(Literal('e'), Concat(Literal('l'), 
-              Concat(Literal('l'), Literal('o'))))) 
+//  val hello = Concat(Literal('h'), Concat(Literal('e'), Concat(Literal('l'), 
+//              Concat(Literal('l'), Literal('o'))))) 
+//  
+//  val world = Concat(Literal('w'), Concat(Literal('o'), Concat(Literal('r'), 
+//              Concat(Literal('l'), Literal('d'))))) 
+//
+//  val helloworld = Concat(Star(hello), world)
+//  
   
-  val world = Concat(Literal('w'), Concat(Literal('o'), Concat(Literal('r'), 
-              Concat(Literal('l'), Literal('d'))))) 
-
-  val helloworld = Concat(Star(hello), world)
+  val helloworld = ("hello" <*>) ~ "world"
   
   require(helloworld matches "helloworld")
   require(helloworld matches "world")
@@ -164,10 +173,16 @@ object Program extends App {
    * the following several definitions with:
    *   val telNumber = '(' ~ digit{3} ~ ')' ~ digit{3} ~ '-' ~ digit{4}
    ***************************************************************************/
-  val threeDigits = Concat(digit, Concat(digit, digit))
-  val fourDigits = Concat(threeDigits, digit)
-  val areaCode = Concat(Literal('('), Concat(threeDigits, Literal(')')))
-  val telNumber = Concat(areaCode, Concat(threeDigits, Concat(Literal('-'), fourDigits)))
+//  val threeDigits = Concat(digit, Concat(digit, digit))
+//  val fourDigits = Concat(threeDigits, digit)
+//  val areaCode = Concat(Literal('('), Concat(threeDigits, Literal(')')))
+//  val telNumber = Concat(areaCode, Concat(threeDigits, Concat(Literal('-'), fourDigits)))
+  
+  val telNumber = '(' ~ digit{3} ~ ')' ~ digit{3} ~ '-' ~ digit{4}
   
   require(telNumber matches "(202)456-1111")
+  require(telNumber matches "(999)999-9999")
+  require(!(telNumber matches "202-456-1111"))
+  require(!(telNumber matches "(202)-456-111"))
+  require(!(telNumber matches "(202)-4a6-1111"))
 }
