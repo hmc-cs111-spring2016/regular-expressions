@@ -6,6 +6,8 @@ For me, the union and concatenation operators were the easiest to implement. Onc
 
 The most difficult part of implementing these operators was to realize where I needed to put the code. I knew that I wanted to combine two regular expressions with the binary operators but was uncertain if I should be doing so in `Union` and `Concat` objects or not. I eventually understood that these could just be declared as methods in the `RegularExpression` class since each of the case classes extends this class.
 
+One interesting thing that I discovered while implementing implicit conversions is that the empty string is treated like a single character in Scala. My conversion from string to regular expression involves recursion through each character in the string. The base case was `EPSILON` since I thought that the empty string would be counted as a string. However, I discovered through testing in Program.scala that this base case is unnecessary. The empty string is not processed by this implicit conversion and the base case is never needed. As a result of this discovery, I changed the base case for this conversion to checking for a string of length 1.
+
 ## Which operators were most difficult to implement and why?
 
 The repetition operator was the most difficult to implement because I forgot that arguments could be passed into methods through curly braces. Once I started looking at this operator as a `RegularExpression` that took one argument, I understood how to go about solving the problem. However, it took me a while to implement it. I wanted to modify `RegularExpression` so that it could take an optional argument, that being the number of times it should be repeated. 

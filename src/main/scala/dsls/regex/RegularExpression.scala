@@ -24,7 +24,7 @@ abstract class RegularExpression {
    *  argument and repeats the given expression that many times
    */
   def apply (repeat: Int): RegularExpression = {
-    if (repeat == 0) EMPTY
+    if (repeat == 0) EPSILON
     else Concat(this, apply(repeat-1))
   }
 }
@@ -57,8 +57,8 @@ case class Concat(val left: RegularExpression, val right: RegularExpression)
  */
 object Concat {
   implicit def stringToRegex(s: String): RegularExpression = {
-    if (s == EPSILON) s
-    else Concat(Literal(s.charAt(0)), stringToRegex(s.substring(1)))
+    if (s.length() == 1) Literal(s.head)
+    else Concat(Literal(s.head), stringToRegex(s.tail))
   }
 }
   
