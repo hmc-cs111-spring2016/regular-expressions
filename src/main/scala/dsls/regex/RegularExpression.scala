@@ -11,6 +11,18 @@ package dsls.regex
 abstract class RegularExpression {
   /** returns true if the given string matches this regular expression */
   def matches(string: String) = RegexMatcher.matches(string, this)
+  def ||(that: RegularExpression): RegularExpression = Union(this, that)
+  def ~(that: RegularExpression): RegularExpression = Concat(this, that)
+  def <*> = Star(this)
+  def <+> = Concat(this, Star(this))
+  def apply(num:Int): RegularExpression = if (num == 0) EPSILON else Concat(this, this.apply(num-1))
+}
+
+object RegularExpression {
+  implicit def charToRegex(c:Char) = Literal(c)
+  implicit def strToRegex(s:String): RegularExpression = {
+    if (s.length() ==1) Literal(s.head) else Concat(Literal(s.head), strToRegex(s.tail))
+  }
 }
 
 /** a regular expression that matches nothing */
