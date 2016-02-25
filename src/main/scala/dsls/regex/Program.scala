@@ -169,10 +169,12 @@ object Program extends App {
    * the following several definitions with:
    *   val telNumber = '(' ~ digit{3} ~ ')' ~ digit{3} ~ '-' ~ digit{4}
    ***************************************************************************/
-  val threeDigits = Concat(digit, Concat(digit, digit))
-  val fourDigits = Concat(threeDigits, digit)
-  val areaCode = Concat(Literal('('), Concat(threeDigits, Literal(')')))
-  val telNumber = Concat(areaCode, Concat(threeDigits, Concat(Literal('-'), fourDigits)))
+//  val threeDigits = Concat(digit, Concat(digit, digit))
+//  val fourDigits = Concat(threeDigits, digit)
+//  val areaCode = Concat(Literal('('), Concat(threeDigits, Literal(')')))
+//  val telNumber = Concat(areaCode, Concat(threeDigits, Concat(Literal('-'), fourDigits)))
+  
+  val telNumber = '(' ~ digit{3} ~ ')' ~ digit{3} ~ '-' ~ digit{4}
   
   require(telNumber matches "(202)456-1111")
 }
