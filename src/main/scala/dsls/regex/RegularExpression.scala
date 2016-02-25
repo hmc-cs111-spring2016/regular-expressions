@@ -11,6 +11,27 @@ package dsls.regex
 abstract class RegularExpression {
   /** returns true if the given string matches this regular expression */
   def matches(string: String) = RegexMatcher.matches(string, this)
+  def ||(other: RegularExpression) = new Union(this, other)
+  def ~(other: RegularExpression) = new Concat(this, other)
+  def <*> = new Star(this)
+  def <+> = new Concat(this, this <*>)
+  def apply(n: Int): RegularExpression = {
+    require(n >= 0)
+    if (n == 0)
+        EPSILON
+    else
+        this ~ this{n - 1}
+  }
+  
+}
+
+object RegularExpression {
+    implicit def apply(literal: Char) = new Literal(literal)
+    implicit def apply(literal: String) = {
+        val literals: List[RegularExpression] = literal.toList.map(Literal)
+        val first: RegularExpression = EPSILON
+        literals.foldLeft(first)(Concat)
+    }
 }
 
 /** a regular expression that matches nothing */
