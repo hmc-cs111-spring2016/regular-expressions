@@ -25,12 +25,12 @@ abstract class RegularExpression {
   def *() = Star(this)
   def <*>() = Star(this)
 
-  /** Allows the usage of the plus sign "+" to indicate one or more repititions */
+  /** Allows the usage of the plus sign "+" to indicate one or more repetitions */
   def +() = Concat(this, this*)
   def <+>() = Concat(this, this*)
 
-  /** Allows us to use {n} to indicate n reptitions 
-   *  
+  /** Allows us to use {n} to indicate n repetitions
+   *
    * @pre: n is non-negative
    */
   def apply(n: Int): RegularExpression = {
