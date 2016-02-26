@@ -11,6 +11,54 @@ package dsls.regex
 abstract class RegularExpression {
   /** returns true if the given string matches this regular expression */
   def matches(string: String) = RegexMatcher.matches(string, this)
+// Handles matches for a character input, not necessary if we have implicit conversion
+//  def matches(char: Char) = RegexMatcher.matches(char.toString, this)
+  /** allows users to use || as union operator */
+  def ||(rest: RegularExpression) = Union(this, rest)
+  
+  /** allows users to use ~ as concatenation operator */
+  def ~(rest: RegularExpression) = Concat(this, rest)
+  
+  /** allows users to use * or <*> for 0 or more repetitions */
+  def <*> = Star(this)
+  /** leverage implemented <*> to allow for flexibility in syntax */
+  def * = this <*>
+  
+  /** allows users to use + or <+> for 1 or more repetitions */
+  def <+> = this ~ this*
+  /** leverage implemented <+> to allow for flexibility in syntax */
+  def + = this <+>
+  
+  /** uses pattern matching to allow users to use {n} to represent n repetitions of this */
+  def apply(repeats: Int): RegularExpression = {
+    repeats match {
+      case 0 => EPSILON
+      // Recursive case where we concatenate 1 instance of this
+      case x => this ~ this{repeats-1}
+    }
+  }
+}
+
+/** A companion object for RegularExpression to handle implicit conversions*/
+object RegularExpression {
+  /** implicit conversion from Char to valid RegularExpression */
+  implicit def charToRegex(char: Char): RegularExpression = Literal(char)
+  
+  /** implicit conversion from String to valid RegularExpression */
+  implicit def stringToRegex(string: String): RegularExpression = {
+    // Convert string to a list of literals such that they are valid RegularExpressions
+    val listLiterals: List[RegularExpression] = string.toList map Literal
+    
+    // Method that uses pattern matching to reconstruct the literals 
+    def literalsCombine(list: List[RegularExpression]): RegularExpression = {
+      list match {
+        case Nil => EPSILON
+        case (x::xs) => Concat(x, literalsCombine(xs))
+      }
+    }
+    // Call literalsCombine to concatenate literals to make a RegularExpression
+    literalsCombine(listLiterals)
+  }
 }
 
 /** a regular expression that matches nothing */
