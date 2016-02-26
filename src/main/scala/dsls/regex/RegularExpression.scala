@@ -13,38 +13,35 @@ import scala.language.implicitConversions
 /** The top of a class hierarchy that encodes regular expressions. */
 abstract class RegularExpression {
   /** returns true if the given string matches this regular expression */
-def matches(string: String) = RegexMatcher.matches(string, this)
+	def matches(string: String) = RegexMatcher.matches(string, this)
 
-//   def || (val that: RegularExpression) = Union(this,that)
+	def || (that: RegularExpression) = Union(this,that)
 
 	def ~ (that: RegularExpression) = Concat(this,that)
-//def + (that: RegularExpression) = this ~ this*
-//   def * = Star(this)
 
-//   def apply (num: Int): RegularExpression = {
-//   	if (num > 0) {
-//   		this ~ this(n-1)
-//   	} else {
-//   		EPSILON
-//   	}
-//   }
+	def <+> () = this ~ (this<*>)
+
+	def <*> () = Star(this)
+
+	def apply (num: Int): RegularExpression = {
+		if (num > 0) {
+			this ~ this{num-1}
+		} else {
+			EPSILON
+		}
+	}
 
 
-// }
-
-// object RegularExpression {
-//   implicit def toChar(c: Char) = Literal(c)
-//   implicit def toString(word: String) = Literal(word)
 }
 
 object RegularExpression {
-	implicit def charToRegEx(c: Char) = Literal(c)
+	implicit def fromChar(c: Char) = Literal(c)
 
-	implicit def stringToRegEx(word: String): RegularExpression = {
+	implicit def fromString(word: String): RegularExpression = {
 		if (word.equals("")) {
 			EPSILON
 		} else
-		charToRegEx(word.head) ~ stringToRegEx(word.tail)
+		fromChar(word.head) ~ fromString(word.tail)
 
 	}
 }
