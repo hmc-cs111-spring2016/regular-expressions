@@ -13,15 +13,15 @@ import scala.language.implicitConversions
 /** The top of a class hierarchy that encodes regular expressions. */
 abstract class RegularExpression {
   /** returns true if the given string matches this regular expression */
-//   def matches(string: String) = RegexMatcher.matches(string, this)
+def matches(string: String) = RegexMatcher.matches(string, this)
 
 //   def || (val that: RegularExpression) = Union(this,that)
 
-//   def ~ (val that: RegularExpression) = Concat(this,that)
-//   def + (val that: RegularExpression) = this ~ this*
+	def ~ (that: RegularExpression) = Concat(this,that)
+//def + (that: RegularExpression) = this ~ this*
 //   def * = Star(this)
 
-//   def apply (val num: Int): RegularExpression = {
+//   def apply (num: Int): RegularExpression = {
 //   	if (num > 0) {
 //   		this ~ this(n-1)
 //   	} else {
@@ -37,6 +37,18 @@ abstract class RegularExpression {
 //   implicit def toString(word: String) = Literal(word)
 }
 
+object RegularExpression {
+	implicit def charToRegEx(c: Char) = Literal(c)
+
+	implicit def stringToRegEx(word: String): RegularExpression = {
+		if (word.equals("")) {
+			EPSILON
+		} else
+		charToRegEx(word.head) ~ stringToRegEx(word.tail)
+
+	}
+}
+
 /** a regular expression that matches nothing */
 object EMPTY extends RegularExpression
 
@@ -44,7 +56,7 @@ object EMPTY extends RegularExpression
 object EPSILON extends RegularExpression
 
 /** a regular expression that matches a literal character */
-//case class Literal(val literal: Char) extends RegularExpression
+case class Literal(val literal: Char) extends RegularExpression
 
 /** a regular expression that matches a literal string */
 //case class Literal(val literal: String) extends RegularExpression

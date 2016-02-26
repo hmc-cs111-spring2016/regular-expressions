@@ -1,6 +1,6 @@
 package dsls.regex
 
-import RegularExpression._
+//import RegularExpression._
 
 object Program extends App {
   
@@ -11,16 +11,16 @@ object Program extends App {
    *   val zero = '0'
    * etc.
    ***************************************************************************/
-  val zero  = Literal('0')
-  val one   = Literal('1')
-  val two   = Literal('2')
-  val three = Literal('3')
-  val four  = Literal('4')
-  val five  = Literal('5')
-  val six   = Literal('6')
-  val seven = Literal('7')
-  val eight = Literal('8')
-  val nine  = Literal('9')
+  val zero  = '0'
+  val one   = '1'
+  val two   = '2'
+  val three = '3'
+  val four  = '4'
+  val five  = '5'
+  val six   = '6'
+  val seven = '7'
+  val eight = '8'
+  val nine  = '9'
   
   require(zero matches "0")
   require(one matches "1")
